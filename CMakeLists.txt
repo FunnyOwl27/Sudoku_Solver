@@ -12,7 +12,7 @@ endif()
 project ("Sudoku_Solver")
 
 # Add source to this project's executable.
-add_executable (Sudoku_Solver "src/*cpp")
+add_executable (Sudoku_Solver "src/main.cpp" "src/Sudoku_Solver.cpp")
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET Sudoku_Solver PROPERTY CXX_STANDARD 11)

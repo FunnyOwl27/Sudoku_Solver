@@ -106,5 +106,10 @@ array<int, 81> Sudoku_Solver::_solver(array<int, 81> arr, int index)
 
 void Sudoku_Solver::solve()
 {
-	this->solved = this->_solver(this->_sudoku, 0);
+	int next_index = 0;
+	while (this->_nonZero.find(next_index) == this->_nonZero.end())
+	{
+		next_index++;
+	}
+	this->solved = this->_solver(this->_sudoku, next_index);
 }
