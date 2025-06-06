@@ -11,8 +11,11 @@ private:
 	static bool _checkRow(std::array<int, 81> arr, int index);
 	static bool _checkColumn(std::array<int, 81> arr, int index);
 	static bool _checkSquare(std::array<int, 81> arr, int index);
-	static std::array<int, 81> _solver(std::array<int, 81>, int);
+	std::array<int, 81> _solver(std::array<int, 81>, int);
+
 public:
+	std::array<int, 81> solved;
+
 	Sudoku_Solver(std::array<int, 81>);
 	~Sudoku_Solver();
 	void solve();

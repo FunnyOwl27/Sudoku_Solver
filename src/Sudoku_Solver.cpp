@@ -81,11 +81,30 @@ static bool Sudoku_Solver::_checkSquare(array<int, 81>arr, int index)
 	return true;
 }
 
-static array<int, 81> Sudoku_Solver::_solver(array<int, 81> arr, int index)
+array<int, 81> Sudoku_Solver::_solver(array<int, 81> arr, int index)
 {
+	assert(index >=- 0 && "negetive index reached, maybe solve not possible");
+	if (index == 81) return arr;
 	for (int i = 1; i < 9; i++)
 	{
 		arr[index] = i;
 
+		if (Sudoku_Solver::_checkColumn(arr, index) &&
+			Sudoku_Solver::_checkRow(arr, index) &&
+			Sudoku_Solver::_checkSquare(arr, index))
+		{
+			int next_index = index + 1;
+			while (this->_nonZero.find(next_index) == this->_nonZero.end())
+			{
+				next_index++;
+			}
+			return Sudoku_Solver::_solver(arr, next_index);
+		}
 	}
+	return;
+}
+
+void Sudoku_Solver::solve()
+{
+	this->solved = this->_solver(this->_sudoku, 0);
 }
