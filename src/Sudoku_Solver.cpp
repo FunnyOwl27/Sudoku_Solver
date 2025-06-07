@@ -1,5 +1,7 @@
 ﻿
 #include "Sudoku_Solver.h"
+#include <iostream>
+#include <cassert>
 
 using std::unordered_set;
 using std::array;
@@ -15,9 +17,9 @@ Sudoku_Solver::Sudoku_Solver(array<int, 81> arr) : _sudoku(arr)
 	}
 	std::cout << "Created" << '\n';
 }
-Sudoku_Solver::~Sudoku_Solver() { std::cout << "Distroyed" }
+Sudoku_Solver::~Sudoku_Solver() { std::cout << "Destroyed"; }
 
-static bool Sudoku_Solver::_checkRow(array<int, 81>arr, int index)
+bool Sudoku_Solver::_checkRow(array<int, 81>arr, int index)
 {
 	int row = index / 9;
 	unordered_set<int> occurred;
@@ -35,7 +37,7 @@ static bool Sudoku_Solver::_checkRow(array<int, 81>arr, int index)
 	return true;
 }
 
-static bool Sudoku_Solver::_checkColumn(array<int,81>arr, int index)
+bool Sudoku_Solver::_checkColumn(array<int,81>arr, int index)
 {
 	int column = index % 9;
 	unordered_set<int> occurred;
@@ -53,7 +55,7 @@ static bool Sudoku_Solver::_checkColumn(array<int,81>arr, int index)
 	return true;
 }
 
-static bool Sudoku_Solver::_checkSquare(array<int, 81>arr, int index)
+bool Sudoku_Solver::_checkSquare(array<int, 81>arr, int index)
 {
 	int row = index / 9;
 	int column = index % 9;
@@ -81,11 +83,17 @@ static bool Sudoku_Solver::_checkSquare(array<int, 81>arr, int index)
 	return true;
 }
 
-array<int, 81> Sudoku_Solver::_solver(array<int, 81> arr, int index)
-{
-	assert(index >=- 0 && "negetive index reached, maybe solve not possible");
-	if (index == 81) return arr;
-	for (int i = 1; i < 9; i++)
+void Sudoku_Solver::_solver(array<int, 81> arr, int index, bool &finished)
+{	
+	//std::cout << index << std::endl;
+	assert(index >= 0 && "negetive index reached, maybe solve not possible");
+	if (index >= 81)
+	{
+		this->solved = arr;
+		finished = true;
+		return;
+	}
+	for (int i = 1; i <= 9; i++)
 	{
 		arr[index] = i;
 
@@ -94,11 +102,14 @@ array<int, 81> Sudoku_Solver::_solver(array<int, 81> arr, int index)
 			Sudoku_Solver::_checkSquare(arr, index))
 		{
 			int next_index = index + 1;
-			while (this->_nonZero.find(next_index) == this->_nonZero.end())
+			while (this->_nonZero.find(next_index) != this->_nonZero.end())
 			{
 				next_index++;
 			}
-			return Sudoku_Solver::_solver(arr, next_index);
+			//std::cout << index << ':' << i << std::endl;
+			Sudoku_Solver::_solver(arr, next_index, finished);
+			//std::cout << index << std::endl;
+			if (finished == true) return;
 		}
 	}
 	return;
@@ -107,9 +118,10 @@ array<int, 81> Sudoku_Solver::_solver(array<int, 81> arr, int index)
 void Sudoku_Solver::solve()
 {
 	int next_index = 0;
-	while (this->_nonZero.find(next_index) == this->_nonZero.end())
+	bool finished = false;
+	while (this->_nonZero.find(next_index) != this->_nonZero.end())
 	{
 		next_index++;
 	}
-	this->solved = this->_solver(this->_sudoku, next_index);
+	this->_solver(this->_sudoku, next_index, finished);
 }
