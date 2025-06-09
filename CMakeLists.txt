@@ -1,17 +1,19 @@
-﻿# CMakeList.txt : CMake project for Sudoku_Solver, include source and define
-# project specific logic here.
-#
-cmake_minimum_required (VERSION 3.8)
+﻿cmake_minimum_required(VERSION 3.28)
+project(CMakeSFMLProject LANGUAGES CXX)
 
-# Enable Hot Reload for MSVC compilers if supported.
+#set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
+include(FetchContent)
+FetchContent_Declare(SFML
+    GIT_REPOSITORY https://github.com/SFML/SFML.git
+    GIT_TAG 3.0.1
+    GIT_SHALLOW ON
+    EXCLUDE_FROM_ALL
+    SYSTEM)
+FetchContent_MakeAvailable(SFML)
 
 project ("Sudoku_Solver")
 
-# Add source to this project's executable.
 add_executable (Sudoku_Solver "src/main.cpp" "src/Sudoku_Solver.cpp" "src/Sudoku_Solver.h")
-
-if (CMAKE_VERSION VERSION_GREATER 3.12)
-  set_property(TARGET Sudoku_Solver PROPERTY CXX_STANDARD 11)
-endif()
-
-# TODO: Add tests and install targets if needed.
+target_compile_features(main PRIVATE cxx_std_17)
+target_link_libraries(main PRIVATE SFML::Graphics)
