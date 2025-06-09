@@ -2,6 +2,7 @@
 #include "Sudoku_Solver.h"
 #include <iostream>
 #include <cassert>
+#include <chrono>
 
 using std::unordered_set;
 using std::array;
@@ -15,9 +16,9 @@ Sudoku_Solver::Sudoku_Solver(array<int, 81> arr) : _sudoku(arr)
 			_nonZero.insert(i);
 		}
 	}
-	std::cout << "Created" << '\n';
+	//std::cout << "Created" << '\n';
 }
-Sudoku_Solver::~Sudoku_Solver() { std::cout << "Destroyed"; }
+Sudoku_Solver::~Sudoku_Solver() {}//std::cout << "Destroyed"; }
 
 bool Sudoku_Solver::_checkRow(array<int, 81>arr, int index)
 {
@@ -85,7 +86,7 @@ bool Sudoku_Solver::_checkSquare(array<int, 81>arr, int index)
 
 void Sudoku_Solver::_solver(array<int, 81> arr, int index, bool &finished)
 {	
-	//std::cout << index << std::endl;
+	//std::cout << index << '\n';
 	assert(index >= 0 && "negetive index reached, maybe solve not possible");
 	if (index >= 81)
 	{
@@ -106,9 +107,9 @@ void Sudoku_Solver::_solver(array<int, 81> arr, int index, bool &finished)
 			{
 				next_index++;
 			}
-			//std::cout << index << ':' << i << std::endl;
+			//std::cout << index << ':' << i << '\n';
 			Sudoku_Solver::_solver(arr, next_index, finished);
-			//std::cout << index << std::endl;
+			//std::cout << index << '\n';
 			if (finished == true) return;
 		}
 	}
@@ -117,6 +118,7 @@ void Sudoku_Solver::_solver(array<int, 81> arr, int index, bool &finished)
 
 void Sudoku_Solver::solve()
 {
+	const auto start = std::chrono::steady_clock::now();
 	int next_index = 0;
 	bool finished = false;
 	while (this->_nonZero.find(next_index) != this->_nonZero.end())
@@ -124,4 +126,8 @@ void Sudoku_Solver::solve()
 		next_index++;
 	}
 	this->_solver(this->_sudoku, next_index, finished);
+	const auto end = std::chrono::steady_clock::now();
+
+	const std::chrono::duration<double> time_taken{ end - start };
+	std::cout << time_taken.count() << '\n';
 }
