@@ -14,6 +14,6 @@ FetchContent_MakeAvailable(SFML)
 project ("Sudoku_Solver")
 
 add_executable (Solver "src/main.cpp" "src/Sudoku_Solver.cpp" "src/Sudoku_Solver.h")
-add_executable(UI "src/gui.h" "src/gui.cpp")
+add_executable(UI "src/gui.cpp" "src/grid.cpp")
 target_compile_features(UI PRIVATE cxx_std_17)
 target_link_libraries(UI PRIVATE PRIVATE SFML::Graphics)
