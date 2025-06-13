@@ -5,7 +5,7 @@ class Sudoku_Square : public sf::Drawable, public sf::Transformable
 {
 public:
     Sudoku_Square();
-    Sudoku_Square(sf::Vector2f position, int index, double size);
+    Sudoku_Square(sf::Vector2f position, int index, float size);
     inline static int selected = -1;
 
 private:

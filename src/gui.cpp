@@ -1,4 +1,5 @@
 #include "gui.h"
+#include "grid.h"
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 
@@ -7,6 +8,7 @@ int main()
     sf::RenderWindow window(sf::VideoMode({800, 600}), "My window");
 
     // run the program as long as the window is open
+    Sudoku_Square a({400,300}, 10, 30);
     while (window.isOpen())
     {
         // check all the window's events that were triggered since the last iteration of the loop
@@ -18,7 +20,7 @@ int main()
         }
 
         window.clear();
-
+        window.draw(a);
         window.display();
     }
 }
