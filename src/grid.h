@@ -2,18 +2,15 @@
 #include <SFML/Window.hpp>
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
-class Sudoku_Square : public sf::Drawable, public sf::Transformable
+class Sudoku_Square : public sf::RectangleShape
 {
 public:
-    int index;
-    float size;
-
+    //int index;
+    static float SIZE;
     Sudoku_Square();
-    Sudoku_Square( int index, float size);
-    inline static int selected = -1;
+    Sudoku_Square(sf::Vector2f size);
+    Sudoku_Square(sf::Vector2f size, int index);
+    inline static int SELECTED = -1;
 
-private:
-    sf::VertexArray vertices{sf::PrimitiveType::TriangleStrip, 4};    
-
-    void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+private:    
 };

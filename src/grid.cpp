@@ -1,22 +1,14 @@
 #include "grid.h"
 
-Sudoku_Square::Sudoku_Square() : index(0), size(50)
+Sudoku_Square::Sudoku_Square()
 {
-    this->setOrigin({this->size / 2, this->size / 2});
-    for (int i = 0; i < 4; i++)
-        this->vertices[i].position = {i % 2 * size, i / 2 * size};
+    this->setSize({this->SIZE, this->SIZE});
+    this->setOrigin(this->getSize().componentWiseDiv({2,2}));//    size/2, size/2 set as origin
 }
 
-Sudoku_Square::Sudoku_Square(int index, float size) : index(index), size(size)
-{
-    this->setOrigin({this->size / 2, this->size / 2});
-    for (int i = 0; i < 4; i++)
-        this->vertices[i].position = {i % 2 * size, i / 2 * size};
-}
-
-void Sudoku_Square::draw(sf::RenderTarget &target, sf::RenderStates states) const
+/*void Sudoku_Square::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
     states.transform *= getTransform();
 
     target.draw(vertices, states);
-}
+}*/
