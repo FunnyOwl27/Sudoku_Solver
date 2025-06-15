@@ -8,9 +8,7 @@ public:
     //int index;
     static float SIZE;
     Sudoku_Square();
-    Sudoku_Square(sf::Vector2f size);
-    Sudoku_Square(sf::Vector2f size, int index);
-    inline static int SELECTED = -1;
-
+    inline static int SELECTED = 82;
+    static void squareClicked(Sudoku_Square* arr,int index);
 private:    
 };
