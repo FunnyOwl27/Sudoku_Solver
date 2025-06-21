@@ -6,8 +6,9 @@
 float paddingx = SCREEN_WIDTH / 16;
 float paddingy = SCREEN_HEIGHT / 12;
 float Sudoku_Square::SIZE = (SCREEN_HEIGHT - 2 * paddingy - 2 * 6 - 5 * 2) / 9;
+sf::Font Sudoku_Square::FONT("../assets/IBMPlexMono-Regular.ttf");
 
-int main()
+int main() 
 {
     sf::RenderWindow window(sf::VideoMode({800, 600}), "My window", 5);
 
@@ -23,7 +24,7 @@ int main()
     background.setOrigin({background.getSize().x / 2, background.getSize().y / 2});
     background.setPosition(grid[4 + 4 * 9].getPosition());
     background.setFillColor({70, 70, 70});
-
+    
     while (window.isOpen())
     {
 
@@ -39,7 +40,6 @@ int main()
                 if (mouseButtonPressed->button == sf::Mouse::Button::Left)
                 {
                     bool clicked_Grid = false;
-                    std::cout << Sudoku_Square::SELECTED << '\n';
                     for (int i = 0; i < 81; i++)
                     {
                         if (grid[i].getGlobalBounds().contains(static_cast<sf::Vector2f>(mouseButtonPressed->position)))
