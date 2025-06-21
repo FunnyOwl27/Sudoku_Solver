@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
+#include <array>
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
 class Sudoku_Square : public sf::RectangleShape
@@ -9,12 +10,13 @@ class Sudoku_Square : public sf::RectangleShape
 public:
     static float SIZE;
     static sf::Font FONT;
-    int value = 7;
+    int value = 0;
     sf::Color textColor;
     Sudoku_Square();
     inline static int SELECTED = 82;
     static void squareClicked(Sudoku_Square* arr, int index);
     static void numberInput(Sudoku_Square* arr, sf::Keyboard::Key number);
+    static std::array<int, 81> sudokuToArray(Sudoku_Square* arr);
     class Color
     { 
     public: 

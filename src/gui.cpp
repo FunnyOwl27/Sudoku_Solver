@@ -1,5 +1,6 @@
 #include "gui.h"
 #include "grid.h"
+#include "Sudoku_Solver.h"
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 
@@ -24,6 +25,11 @@ int main()
     background.setOrigin({background.getSize().x / 2, background.getSize().y / 2});
     background.setPosition(grid[4 + 4 * 9].getPosition());
     background.setFillColor({70, 70, 70});
+
+    sf::RectangleShape solve({SCREEN_WIDTH - (2 * paddingx + Sudoku_Square::SIZE/2 + 5 + grid[4 * 9 + 8].getPosition().x), Sudoku_Square::SIZE*2});
+    solve.setOrigin(solve.getSize().componentWiseDiv({2,2}));
+    solve.setPosition(grid[4*9 + 8].getPosition() + sf::Vector2f{paddingx + Sudoku_Square::SIZE/2 + 5 + solve.getSize().x/2, 0});
+    solve.setFillColor(Sudoku_Square::Color::SolvedText);
     
     while (window.isOpen())
     {
@@ -54,6 +60,19 @@ int main()
                     if (!clicked_Grid)
                     {
                         Sudoku_Square::squareClicked(grid, 82);
+                    }
+                    if (solve.getGlobalBounds().contains(static_cast<sf::Vector2f>(mouseButtonPressed->position)))
+                    {
+                        Sudoku_Solver a(Sudoku_Square::sudokuToArray(grid));
+                        a.solve();
+                        for(int i = 0; i < 81; i++)
+                        {
+                            if (grid[i].value == 0)
+                            {
+                                grid[i].value = a.solved[i];
+                                grid[i].textColor = Sudoku_Square::Color::SolvedText;
+                            }
+                        }
                     }
                 }
             }
@@ -97,6 +116,7 @@ int main()
         {
             window.draw(i);
         }
+        window.draw(solve);
         window.display();
     }
 }

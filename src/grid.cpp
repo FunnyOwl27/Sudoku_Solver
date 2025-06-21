@@ -1,7 +1,9 @@
 #include "grid.h"
 #include <string>
+#include <array>
 #include <iostream>
 using std::to_string;
+using std::array;
 
 Sudoku_Square::Sudoku_Square()
 {
@@ -17,6 +19,7 @@ void Sudoku_Square::squareClicked(Sudoku_Square *arr, int index)
         if (SELECTED >=82)
             return;
         arr[SELECTED].setFillColor({25, 25, 25});
+        arr[SELECTED].textColor = Sudoku_Square::Color::InputText;
         SELECTED = 82;
         return;
     }
@@ -40,6 +43,15 @@ void Sudoku_Square::numberInput(Sudoku_Square* arr,sf::Keyboard::Key a)
     if (num > 9 || num < 0) return;
     arr[SELECTED].value = num;
 }
+
+array<int,81> Sudoku_Square::sudokuToArray(Sudoku_Square* arr)
+{
+    array<int,81> ret = {0};
+    for(int i = 0; i < 81; i++)
+        ret[i] = arr[i].value;
+    return ret;
+}
+
 void Sudoku_Square::draw(sf::RenderTarget& target, sf::RenderStates states) const 
 {
     sf::RenderStates states2 = states;
