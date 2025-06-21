@@ -87,6 +87,7 @@ int main()
                     else
                         Sudoku_Square::squareClicked(grid, 0);
                 }
+                Sudoku_Square::numberInput(grid, keyPressed->code);
             }
         }
         // DRAW STUFF

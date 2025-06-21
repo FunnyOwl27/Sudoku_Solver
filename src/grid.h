@@ -13,8 +13,8 @@ public:
     sf::Color textColor;
     Sudoku_Square();
     inline static int SELECTED = 82;
-    static void squareClicked(Sudoku_Square* arr,int index);
-
+    static void squareClicked(Sudoku_Square* arr, int index);
+    static void numberInput(Sudoku_Square* arr, sf::Keyboard::Key number);
     class Color
     { 
     public: 

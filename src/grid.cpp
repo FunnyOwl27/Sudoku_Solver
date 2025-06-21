@@ -31,6 +31,15 @@ void Sudoku_Square::squareClicked(Sudoku_Square *arr, int index)
     arr[SELECTED].textColor = Color::SelectedText;
 }
 
+void Sudoku_Square::numberInput(Sudoku_Square* arr,sf::Keyboard::Key a)
+{
+    if (SELECTED >= 82) return;
+    if (a == sf::Keyboard::Key::Backspace || a == sf::Keyboard::Key::Delete) arr[SELECTED].value = 0;
+
+    int num = static_cast<int>(a) - static_cast<int>(sf::Keyboard::Key::Num0);
+    if (num > 9 || num < 0) return;
+    arr[SELECTED].value = num;
+}
 void Sudoku_Square::draw(sf::RenderTarget& target, sf::RenderStates states) const 
 {
     sf::RenderStates states2 = states;
