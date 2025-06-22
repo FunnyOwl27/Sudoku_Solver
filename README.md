@@ -2,8 +2,8 @@
 Solves Sudoku.
 
 ## How to use?
-For GUI build UI.
-for Text input build Sudoku_Solver.
+- For GUI build UI.
+- For Text input build Sudoku_Solver.
 
 ## GUI
 - Green button/rectangle to solve input
