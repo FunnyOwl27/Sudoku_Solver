@@ -7,7 +7,7 @@
 float paddingx = SCREEN_WIDTH / 16;
 float paddingy = SCREEN_HEIGHT / 12;
 float Sudoku_Square::SIZE = (SCREEN_HEIGHT - 2 * paddingy - 2 * 6 - 5 * 2) / 9;
-sf::Font Sudoku_Square::FONT("../assets/IBMPlexMono-Regular.ttf");
+sf::Font Sudoku_Square::FONT("../../assets/IBMPlexMono-Regular.ttf");
 
 int main() 
 {
@@ -30,6 +30,11 @@ int main()
     solve.setOrigin(solve.getSize().componentWiseDiv({2,2}));
     solve.setPosition(grid[4*9 + 8].getPosition() + sf::Vector2f{paddingx + Sudoku_Square::SIZE/2 + 5 + solve.getSize().x/2, 0});
     solve.setFillColor(Sudoku_Square::Color::SolvedText);
+
+    sf::RectangleShape clear(solve.getSize());
+    clear.setOrigin(clear.getSize().componentWiseDiv({2,2}));
+    clear.setPosition(grid[7*9 + 8].getPosition() + sf::Vector2f{paddingx + Sudoku_Square::SIZE/2 + 5 + solve.getSize().x/2, 0});
+    clear.setFillColor(sf::Color::Red);
     
     while (window.isOpen())
     {
@@ -72,6 +77,14 @@ int main()
                                 grid[i].value = a.solved[i];
                                 grid[i].textColor = Sudoku_Square::Color::SolvedText;
                             }
+                        }
+                    }
+                    if (clear.getGlobalBounds().contains(static_cast<sf::Vector2f>(mouseButtonPressed->position)))
+                    {
+                        for(auto &i : grid)
+                        {
+                            i.value = 0;
+                            i.textColor = Sudoku_Square::Color::InputText;
                         }
                     }
                 }
@@ -117,6 +130,7 @@ int main()
             window.draw(i);
         }
         window.draw(solve);
+        window.draw(clear);
         window.display();
     }
 }
