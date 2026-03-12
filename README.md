@@ -9,5 +9,3 @@ Solves Sudoku.
 - Green button/rectangle to solve input
 - Red to clear Sudoku
 
-## Problems
-- Solving is too slow
